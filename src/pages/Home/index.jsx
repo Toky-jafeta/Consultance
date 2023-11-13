@@ -83,7 +83,7 @@ function Home() {
           <div>
             <NameContainer>Je suis {bioData.first_name} {bioData.last_name}</NameContainer>
             <BiographyContainer>{extractFirst50Words(bioData.biography)}</BiographyContainer>
-            <StyledLink to='/list-portfolio'>Voir mon Portfolio</StyledLink>
+            <StyledLink to='/list-portfolio'>Voir nos Portfolio</StyledLink>
             <StyledLink to='/contact'>Nous engagé</StyledLink>
           </div>
         )
