@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { useParams } from "react-router-dom"
 import { Loader } from "../../../utils/Atom"
 
-const biographiContainer = styled.div`
+const BiographiContainer = styled.div`
 
 `
 function Biographie(){
@@ -41,11 +41,11 @@ function Biographie(){
                 isDataLoading ? (
                     <Loader />
                 ) : (
-                    <biographiContainer>
+                    <BiographiContainer>
                         <p>Salut, je suis {biographie.first_name } {biographie.last_name}</p>
                         <h1>{ biographie.job_title?.jobtitle }</h1>
                         <p>{ biographie.biography }</p>
-                    </biographiContainer>    
+                    </BiographiContainer>    
                 )
             }
         </div>

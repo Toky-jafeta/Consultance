@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import linkedin from "../../../assets/linkedin.png"
 import instagram from '../../../assets/instagram.png'
 import facebook from '../../../assets/facebook.png'
+import PropTypes from 'prop-types'
 
 const LinkStyled = styled(Link)`
     padding: 15px;
@@ -26,22 +27,34 @@ const StyledHr = styled.hr`
     border: 1px solid black;
 `
 
-function Portfolionav(){
+function Portfolionav({linkedin_account, instagram_account, facebook_account}){
     return (
         <>
             <LinkStyled to="/list-portfolio">List portfolios</LinkStyled>
             <LinkStyled to="biographie">Biographie</LinkStyled>
-            <LinkStyled to="cvdownload">cvdownload</LinkStyled>
+            <LinkStyled to="cvdownload">Télécharger le CV</LinkStyled>
             <LinkStyled to="techno">Techno</LinkStyled>
             <StyledHr />
             <SocialNetworkDiv>
-                <a href="https://www.linkedin.com/in/toky-rasolomanitra-121896220/" target="_blank" rel="noreferrer">
+                <a href={linkedin_account} target="_blank" rel="noreferrer">
                     <SocialIcon src={linkedin} alt="linkedin-logo" />
                 </a>
-                <SocialIcon src={instagram}alt="instagram-logo" />
-                <SocialIcon src={facebook} alt="facebook-logo" />
+                <a href={instagram_account} target="_blank" rel="noreferrer">
+                    <SocialIcon src={instagram}alt="instagram-logo" />
+                </a>
+                <a href={facebook_account} target="_blank" rel="noreferrer">
+                    <SocialIcon src={facebook} alt="facebook-logo" />
+                </a>
             </SocialNetworkDiv>
         </>
     )
 }
+
+Portfolionav.propTypes = {
+    linkedin_account : PropTypes.string,
+    instagram_account : PropTypes.string,
+    facebook_account  : PropTypes.string
+}
+
 export default Portfolionav
+
