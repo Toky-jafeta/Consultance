@@ -1,8 +1,10 @@
 import styled from "styled-components"
 import { Outlet, useParams} from "react-router-dom"
 import Portfolionav from "../../components/Portfolio/Portfolionav/Portfolionav"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { Loader } from "../../utils/Atom"
+import { UserDataContext } from "../../utils/context"
+
 
 const DivLink = styled.div`
     width: 20%;
@@ -44,32 +46,23 @@ const SectionContainer = styled.section`
 `
 
 function Portfolio(){
-    const { id } = useParams()
-    const [userData, setUserData] = useState([])
     const [error, setError] = useState(false)
     const [isDataLoading, setIsDataLoading] = useState(false)
+    const { id } = useParams()
 
-    useEffect(()=>{
-        async function FetchUserData(){
-            setIsDataLoading(true)
-            try{
-                const response = await fetch(`http://127.0.0.1:8000/v1/user/${id}/`)
-                const userData = await response.json()
-                setUserData(userData)
-            }catch(err){
-                setError(true)
-            }finally {
-                setIsDataLoading(false)
-            }
+    const { userData, updateId } = useContext(UserDataContext)
+
+    useEffect(() => {
+        setIsDataLoading(true)
+        try{
+            updateId(id)
+        }catch(err){
+            setError(true)
+        }finally{
+            setIsDataLoading(false)
         }
-        FetchUserData()
-    } , [])
-
-    if (error){
-        return (
-            <span>Il y a eu une erreur</span>
-        )
-    }
+      }, [])
+    
     return (
         <SectionContainer>
             <DivLink>
@@ -78,7 +71,7 @@ function Portfolio(){
                         <Loader />
                     </div>
                 ) : (
-                    <Portfolionav linkedin_account={userData.linkedin_account} instagram_account={userData.instagram_account} facebook_account={userData.facebook_account}/>
+                    <Portfolionav linkedin_account={userData?.linkedin_account} instagram_account={userData?.instagram_account} facebook_account={userData?.facebook_account}/>
                 )}
             </DivLink>
             <DivImg>

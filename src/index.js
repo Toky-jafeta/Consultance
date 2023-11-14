@@ -12,6 +12,7 @@ import Portfolio from './pages/Portfolio'
 import Lists from './pages/Portfolio/Lists/Lists';
 import Biographie from './components/Portfolio/Biographie';
 import CvDownload from './components/Portfolio/CvDownload/CvDownload';
+import { UserProvider } from './utils/context';
 
 
 import reportWebVitals from './reportWebVitals';
@@ -20,19 +21,21 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/service' element={<Service />} />
-        <Route path='/resume' element={<Resume />} />
-        <Route path="/list-portfolio" element={<Lists />} />
-        <Route path="portfolio/:id" element={<Portfolio />} >
-          <Route path="biographie" element={<Biographie />} />
-          <Route path="techno" element={<Techno />} />
-          <Route path="cvdownload" element={<CvDownload />} />
-        </Route>
-      </Routes>
+      <UserProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/service' element={<Service />} />
+          <Route path='/resume' element={<Resume />} />
+          <Route path="/list-portfolio" element={<Lists />} />
+          <Route path="portfolio/:id" element={<Portfolio />} >
+            <Route path="biographie" element={<Biographie />} />
+            <Route path="techno" element={<Techno />} />
+            <Route path="cvdownload" element={<CvDownload />} />
+          </Route>
+        </Routes>
+      </UserProvider>
   </Router>
   </React.StrictMode>
 );

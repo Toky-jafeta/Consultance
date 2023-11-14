@@ -1,39 +1,30 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import styled from "styled-components"
 import { useParams } from "react-router-dom"
 import { Loader } from "../../../utils/Atom"
+import { UserDataContext } from "../../../utils/context"
 
 const BiographiContainer = styled.div`
 
 `
 function Biographie(){
     const { id } = useParams()
-    
-    const [biographie, setbiographie] = useState([])
     const [error, setError] = useState(false)
     const [isDataLoading, setIsDataLoading] = useState(false)
 
-    useEffect(()=>{
-        async function FetchBiographie(){
-            setIsDataLoading(true)
-            try {
-                const response = await fetch(`http://127.0.0.1:8000/v1/user/${id}/`)
-                const biographie = await response.json()
-                setbiographie(biographie)
-            }catch(err){
-                setError(true)
-            } finally {
-                setIsDataLoading(false)
-            }
-        }
-        FetchBiographie()
-    }, [])
+    const { userData, updateId } = useContext(UserDataContext)
 
-    if (error){
-        return (
-            <span>Il y a eu une erreur</span>
-        )
+    useEffect(()=>{
+        setIsDataLoading(true)
+        try{
+            updateId(id)
+        }catch(err){
+            setError(true)
+        }finally{
+            setIsDataLoading(false)
+        }
     }
+    ,[])
 
     return (
         <div>
@@ -42,9 +33,9 @@ function Biographie(){
                     <Loader />
                 ) : (
                     <BiographiContainer>
-                        <p>Salut, je suis {biographie.first_name } {biographie.last_name}</p>
-                        <h1>{ biographie.job_title?.jobtitle }</h1>
-                        <p>{ biographie.biography }</p>
+                        <p>Salut, je suis {userData.first_name } {userData.last_name}</p>
+                        <h1>{ userData.job_title?.jobtitle }</h1>
+                        <p>{ userData.biography }</p>
                     </BiographiContainer>    
                 )
             }
