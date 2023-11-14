@@ -47,13 +47,12 @@ const SectionContainer = styled.section`
 
 function Portfolio(){
     const [error, setError] = useState(false)
-    const [isDataLoading, setIsDataLoading] = useState(false)
+    const [isDataLoading, setIsDataLoading] = useState(true)
     const { id } = useParams()
 
     const { userData, updateId } = useContext(UserDataContext)
 
     useEffect(() => {
-        setIsDataLoading(true)
         try{
             updateId(id)
         }catch(err){
@@ -61,8 +60,12 @@ function Portfolio(){
         }finally{
             setIsDataLoading(false)
         }
-      }, [])
-    
+      }, [id, updateId])
+    if (error){
+        return (
+            <span>Il y a eu une erreur</span>
+        )
+    }
     return (
         <SectionContainer>
             <DivLink>

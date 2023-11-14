@@ -4,8 +4,7 @@ export const UserDataContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [ id , setId] = useState("")
-    const [userData, setUserData] = useState([])
-    const [error, setError] = useState(false)
+    const [userData, setUserData] = useState({})
 
     const updateId = (newId) => {
         setId(newId)
@@ -19,7 +18,7 @@ export const UserProvider = ({ children }) => {
                   const userData = await response.json()
                   setUserData(userData)
                 } catch (err) {
-                    setError(true)
+                    setUserData([])
                 }
             }
             fetchUser();
@@ -28,7 +27,7 @@ export const UserProvider = ({ children }) => {
 
     return (
         <UserDataContext.Provider value={{ userData, updateId }}>
-            {children}
+            { children }
         </UserDataContext.Provider>
     )
 }

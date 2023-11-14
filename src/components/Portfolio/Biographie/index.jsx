@@ -10,12 +10,11 @@ const BiographiContainer = styled.div`
 function Biographie(){
     const { id } = useParams()
     const [error, setError] = useState(false)
-    const [isDataLoading, setIsDataLoading] = useState(false)
+    const [isDataLoading, setIsDataLoading] = useState(true)
 
     const { userData, updateId } = useContext(UserDataContext)
 
     useEffect(()=>{
-        setIsDataLoading(true)
         try{
             updateId(id)
         }catch(err){
@@ -23,8 +22,13 @@ function Biographie(){
         }finally{
             setIsDataLoading(false)
         }
+    },[id, updateId])
+
+    if (userData.length === 0 || error){
+        return(
+            <span>Il y aeu une erreur</span>
+        )
     }
-    ,[])
 
     return (
         <div>
