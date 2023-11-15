@@ -20,6 +20,13 @@ const DivImg = styled.div`
     margin-right: 25px;
     border: solid 5px black;
     min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+const ImgContainer = styled.img`
+    width: 93%;
+    transition: transform 0.2s ease-in-out
 `
 
 const DivOutlet = styled.div`
@@ -48,6 +55,7 @@ const SectionContainer = styled.section`
 function Portfolio(){
     const [error, setError] = useState(false)
     const [isDataLoading, setIsDataLoading] = useState(true)
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const { id } = useParams()
 
     const { userData, updateId } = useContext(UserDataContext)
@@ -61,11 +69,32 @@ function Portfolio(){
             setIsDataLoading(false)
         }
       }, [id, updateId])
+
+    useEffect(() => {
+        const handleMouseMove = (event) => {
+            setMousePosition({ x: event.clientX, y: event.clientY });
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
+
+    const calculateImageTransform = () => {
+        const xOffset = (mousePosition.x / window.innerWidth - 0.5) * 25;
+        const yOffset = (mousePosition.y / window.innerHeight - 0.5) * 25;
+    
+        return `translate(${xOffset}px, ${yOffset}px)`;
+      };
+    
     if (error){
         return (
             <span>Il y a eu une erreur</span>
         )
     }
+    console.log(userData.profile?.extension)
     return (
         <SectionContainer>
             <DivLink>
@@ -78,7 +107,11 @@ function Portfolio(){
                 )}
             </DivLink>
             <DivImg>
-
+                {
+                    userData.profile &&  (
+                        <ImgContainer src={`data:image/${userData.profile.extension};base64,${userData.profile.container}`} alt={userData.profile.name} style={{ transform: calculateImageTransform() }}/>
+                    )
+                }
             </DivImg>
             <DivOutlet>
                 <Outlet />
