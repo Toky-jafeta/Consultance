@@ -1,13 +1,18 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import linkedin from "../../../assets/linkedin.png"
 import instagram from '../../../assets/instagram.png'
 import facebook from '../../../assets/facebook.png'
 import PropTypes from 'prop-types'
 
-const LinkStyled = styled(Link)`
+const LinkStyled = styled(NavLink)`
     padding: 15px;
     text-decoration: none;
+    width:80%;
+    &.active {
+        background-color: white;
+        border-radius: 5px;
+    }
 `
 
 const SocialNetworkDiv = styled.div`

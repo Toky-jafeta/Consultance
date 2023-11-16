@@ -109,7 +109,7 @@ function Portfolio(){
             <DivImg>
                 {
                     userData.profile &&  (
-                        <ImgContainer src={`data:image/${userData.profile.extension};base64,${userData.profile.container}`} alt={userData.profile.name} style={{ transform: calculateImageTransform() }}/>
+                        <ImgContainer key={`${userData.id}`} src={`data:image/${userData.profile.extension};base64,${userData.profile.container}`} alt={userData.profile.name} style={{ transform: calculateImageTransform() }}/>
                     )
                 }
             </DivImg>

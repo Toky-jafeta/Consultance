@@ -1,18 +1,21 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
     padding: 15px;
     color: white;
     text-decoration: none;
     font-size: 18px;
+    &.active {
+        background-color: red;
+        border-radius:5px;
+    }
 `
 
 const StyledNav = styled.nav`
     position: absolute;
     top: 0;
     right: 0;
-    margin: 15px;
     display: flex;
     align-items: flex-end;
     @media (max-width: 768px) {
